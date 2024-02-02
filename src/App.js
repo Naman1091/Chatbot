@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { AddTodo } from './components/AddTodo';
 import { About } from './components/About';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
