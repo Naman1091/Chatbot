@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Chatbot/static/css/main.f1cb10f1.css",
-    "main.js": "/Chatbot/static/js/main.c93c018c.js",
+    "main.css": "/Chatbot/static/css/main.6b020c23.css",
+    "main.js": "/Chatbot/static/js/main.d8cb1034.js",
     "static/js/787.6f3d5515.chunk.js": "/Chatbot/static/js/787.6f3d5515.chunk.js",
-    "static/media/R.jpg": "/Chatbot/static/media/R.eed088b85f54803b39e9.jpg",
+    "static/media/R.jpg": "/Chatbot/static/media/R.9f9921a95da5a048b5ee.jpg",
     "index.html": "/Chatbot/index.html",
-    "main.f1cb10f1.css.map": "/Chatbot/static/css/main.f1cb10f1.css.map",
-    "main.c93c018c.js.map": "/Chatbot/static/js/main.c93c018c.js.map",
+    "main.6b020c23.css.map": "/Chatbot/static/css/main.6b020c23.css.map",
+    "main.d8cb1034.js.map": "/Chatbot/static/js/main.d8cb1034.js.map",
     "787.6f3d5515.chunk.js.map": "/Chatbot/static/js/787.6f3d5515.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f1cb10f1.css",
-    "static/js/main.c93c018c.js"
+    "static/css/main.6b020c23.css",
+    "static/js/main.d8cb1034.js"
   ]
 }
