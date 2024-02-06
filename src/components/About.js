@@ -3,8 +3,9 @@ import React from 'react'
 export const About = () => {
   return (
     <div>
-        This is an about component 
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, est aperiam aspernatur eaque expedita voluptate. Omnis temporibus eaque officiis, eius quisquam corrupti quas et error itaque explicabo illum id commodi porro vero repellat saepe!</p>
+        <h1>Introduction to my website </h1><b/>
+        <h2 style={{color:"red"}}>Welcome everyone</h2>
+        <p>This website help to Add everday task in a list in form of Todo and there is chatbot to whom you can ask question.</p>
     </div>
   )
 }
