@@ -171,3 +171,106 @@ function ChatBot() {
 };
 
 export default ChatBot;
+
+//hello 
+
+import React, { useEffect, useState, useRef } from 'react';
+import { FaUserCircle, FaRobot } from 'react-icons/fa';
+
+function ChatBot() {
+    const [userMsg, setUserMsg] = useState('');
+    const [conversation, setConversation] = useState([]);
+    const [name, setName] = useState('');
+    const messagesEndRef = useRef(null);
+
+    const scrollBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollBottom();
+    }, [conversation]);
+
+    const handleSubmit = async () => {
+        try {
+            const url = 'http://localhost:4443/lexbot/text';
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userMsg })
+            };
+            const response = await fetch(url, options);
+            const data = await response.json();
+            setConversation([...conversation, { role: 'user', text: userMsg }]);
+            setUserMsg('');
+            scrollBottom();
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleDelete = async () => {
+        const url = 'http://localhost:4443/lexbot/text';
+        const options = { method: "DELETE" };
+        try {
+            await fetch(url, options);
+            setConversation([]);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const url = 'http://localhost:4443/lexbot/text';
+                const options = { method: "GET" };
+                const response = await fetch(url, options);
+                const data = await response.json();
+                setConversation(data);
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+        fetchData();
+    }, []);
+
+    const saveName = () => {
+        setName(userMsg.trim());
+        handleSubmit();
+    };
+
+    return (
+        <>
+            <div> Message-Chat-Bot </div>
+            <div className="d-flex align-items-center justify-content-center border border-2 border-success">
+                <div className="d-flex align-items-center justify-content-center border border-2">
+                    <div className="d-flex flex-column justify-content-between" style={{ height: "75vh", width: "350px" }}>
+                        <div className="d-flex align-items-start justify-content-start border border-success border-2" style={{ backgroundColor: 'orange' }}>
+                            <img src="./assests/bot1.png" alt="Bot Icon" className="d-flex flex-row justify-content-center mx-4 rounded-pill" width="40" />
+                            <span className="d-flex align-self-center justify-content-center" style={{ textTransform: 'uppercase', textShadow: '2px 2px 5px red', paddingLeft: '20px' }}>Message-Chat-Bot</span>
+                        </div>
+                        <div className="d-flex flex-column border p-3 text-black w-100 flex-fill" style={{ overflowY: 'auto', backgroundColor: 'lightgreen' }}>
+                            {conversation.map((msg, index) => (
+                                <div key={index} className={`message d-flex ${msg.role === 'user' ? "user justify-content-end" : "bot"}`}>
+                                    <div className="message-icon mr-2">{msg.role === 'user' ? <FaUserCircle /> : <FaRobot />}</div>
+                                    <div className="d-flex message-content border border-black text-white rounded my-2 p-2" style={{ backgroundColor: 'blue' }}>{msg.text}</div>
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+                        <div className="d-flex">
+                            <input type="text" placeholder="Type your message here..." value={userMsg} onChange={e => setUserMsg(e.target.value)} className="w-75" />
+                            <button type="button" className="btn w-25" style={{ backgroundColor: 'green', color: 'white' }} onClick={userMsg.trim() === '' ? saveName : handleSubmit}>Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+};
+
+export default ChatBot;
+
