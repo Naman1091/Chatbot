@@ -90,3 +90,84 @@ export default function Chatbot() {
 
 
 {/* <div className='message-time ml-2'>{msg.time.toLocaleTimeString()}</div> */}
+
+import React, { useEffect, useState } from 'react'
+
+function ChatBot() {
+    const [userMsg, setUserMsg] = useState('');
+    const [conversation, setConversation] = useState([]);
+
+    const handleSubmit = () => {
+        postData();
+        setUserMsg('');
+    };
+
+    const handleDelete = () => {
+        delData();
+    };
+
+    const postData = async () => {
+        try {
+            const url = 'http://localhost:4443/lexbot/text';
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ userMsg })
+            };
+            const response = await fetch(url, options);
+            const data = await response.json();
+
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const delData = async () => {
+        const url = 'http://localhost:4443/lexbot/text'
+        const options = { method: "DELETE" };
+        try {
+            const response = await fetch(url, options);
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const url = 'http://localhost:4443/lexbot/text';
+                const options = {
+                    method: "GET"
+                };
+                const response = await fetch(url, options);
+                const data = await response.json();
+                setConversation(data)
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+        fetchData()
+    }, [conversation]);
+
+    return (
+        <>
+            <div> ChatBot </div>
+            <input type="text" name="text" value={userMsg} onChange={e => setUserMsg(e.target.value)} />
+            <button type="submit" onClick={handleSubmit}> send </button>
+            <button type="submit" onClick={handleDelete}> delete </button>
+
+            <div>
+                {conversation.map((msg, index) => (
+                    <p key={index}> {msg.role === 'user' ? "User: " : "Bot: "}{msg.text} </p>
+                ))}
+            </div>
+        </>
+    )
+};
+
+export default ChatBot;
